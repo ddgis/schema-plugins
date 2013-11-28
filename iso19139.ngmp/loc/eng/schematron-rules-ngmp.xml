@@ -1,33 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <strings>
 	<!-- Code List -->
-	<M0>Code List</M0>
+	<M0.1>Code List</M0.1>
+	<!-- Code List Element value -->
+	<M0.2>Code List Element Value</M0.2>
 	<!-- MDSID -->
 	<M1>Metadata Set Identifier (MDSID)</M1>
 	<alert.M1><div>Metadata Set Identifier element required (element cardinality is [1])</div></alert.M1>
 	<warning.M1>
-		<div>It is strongly recommended to provide a unique identifier or a locator.
+		<div>Warning: It is strongly recommended to provide a unique identifier or a locator.
 			<span class="validationReportSuggestion">Suggestions: Use a UUID, a URI or URL</span>
 		</div>
 	</warning.M1>
 	<!-- MDPTSID -->
 	<M2>Parent Metadata Set Identifier (MDPTSID)</M2>
 	<warning.M2.1>
-		<div>This element is mandatory if an upper-level hierarchy exists, typically if a dataset pertains to a dataset series.
+		<div>Warning: This element is mandatory if an upper-level hierarchy exists, typically if a dataset pertains to a dataset series.
 			<span class="validationReportSuggestion">Suggestions: This refers to the metadata set identifier of the resource to which this resource is a subset (child).</span>
 		</div>
 	</warning.M2.1>
 	<warning.M2.2>
-		<div>It is strongly recommended to provide a unique identifier or a locator.
+		<div>Warning: It is strongly recommended to provide a unique identifier or a locator.
 			<span class="validationReportSuggestion">Suggestions: Use a UUID, a URI or URL</span>
 		</div>
 	</warning.M2.2>
 	<!-- MDLANG -->
 	<M3>Metadata Language (MDLANG)</M3>
-	<alert.M3><div>Metadata Language element required (element cardinality is [1])</div></alert.M3>	
+	<alert.M3><div>Metadata Language (MDLANG) element required (element cardinality is [1])</div></alert.M3>
 	<!-- MDCSET -->
 	<M4>Metadata Character Set (MDCSET)</M4>
-	<alert.M4><div>Metadata Character Set element required (the value of the element is fixed to <b>utf8</b>)</div></alert.M4>
+	<alert.M4><div>Metadata Character Set (MDCSET) element required (the value of the element is fixed to <b>utf8</b>)</div></alert.M4>
 	<!-- MDPOC -->
 	<M5>Metadata Point Of Contact (MDPOC)</M5>
 	<alert.M5.1><div>Metadata Point Of Contact element required (NGMP mandates at least one instance of contact having pointOfContact as role; instances having a different role are out of NGMP scope)</div></alert.M5.1>
@@ -53,12 +55,12 @@
 	<!-- RSNRNN, RSSHNA and RSNSNN-->
 	<M16>Resource Sheet Name (RSSHNA), Resource NRN Nation (RSNRNN) and Resource NSN Nation (RSNSNN)</M16>
 	<warning.M16.1>
-		<div>
+		<div>Warning
 			<span class="validationReportSuggestion">Suggestions: 1) Mandated if Resource National Reference Number (RSNRN) element is set; the value of Resource NRN Nation (RSNRNN) element is a 3-character country code (STANAG 1059) following "NRN:"; 2) Mandated if Resource National Stock Number (RSNSN) element is set; the value of Resource NSN Nation (RSNSNN) element is a 3-character country code (STANAG 1059) following "NSN:"); 3) Resource Sheet Name (RSSHNA) Code Space element must refer to Name of Resource Series (RSSERI) element</span>
 		</div>
 	</warning.M16.1>
 	<warning.M16.2>
-		<div>
+		<div>Warning
 			<span class="validationReportSuggestion">Suggestions: Code Element required is Code Space Element is set.</span>
 		</div>
 	</warning.M16.2>
@@ -73,10 +75,10 @@
 	<!-- DGITYP -->
 	<M19>Geospatial Information Type (DGITYP) keyword</M19>
 	<alert.M19><div>Geospatial Information Type (DGITYP) keyword element must have thesaurus title set to 'NGMP_GeospatialInformationTypeCode', thesaurus date set to '2011-09-16' and thesaurus date type set to 'creation'</div></alert.M19>
-	<!-- RSRPTP -->
+	<!-- RSGFLV -->
 	<M20>Resource Georeferencing Level (RSGFLV) keyword</M20>
 	<alert.M20><div>Resource Georeferencing Level (RSGFLV) keyword element must have thesaurus title set to 'NGMP_GeoreferencingLevelCode', thesaurus date set to '2011-09-16' and thesaurus date type set to 'creation'</div></alert.M20>
-	<!-- RSRPTP -->
+	<!-- RSPREF -->
 	<M21>Resource Spatial Representation Type (RSPREF) keyword</M21>
 	<alert.M21><div>Resource Spatial Representation Type (RSPREF) keyword element must have thesaurus title set to 'NGMP_RepresentationFormCode', thesaurus date set to '2011-09-16' and thesaurus date type set to 'creation'</div></alert.M21>
 	<!-- RSDTLVL -->
@@ -137,4 +139,14 @@
 	<!-- THUMB -->
 	<M40>Resource Thumbnail (THUMB)</M40>
 	<alert.M40><div>File Description element required when Resource Thumbnail (THUMB) element is set</div></alert.M40>
+	<!-- RSRPTP -->
+	<M41>Resource Spatial Representation Type (RSRPTP)</M41>
+	<warning.M41>
+		<div>Warning: Only one instance in the scope of NGMP.
+			<span class="validationReportSuggestion">Suggestions: Resource Spatial Representation Type (RSRPTP) element describes the method used to spatially represent geographic information</span>
+		</div>
+	</warning.M41>
+	<!-- RSTOPIC -->
+	<M42>Resource Topic Category (RSTOPIC)</M42>
+	<alert.M42><div>Topic Category (RSTOPIC) element value must be in Topic Category Enumeration (default value is <b>imageryBaseMapsEarthCover</b>)</div></alert.M42>
 </strings>

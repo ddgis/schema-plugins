@@ -17,14 +17,24 @@
 	<sch:let name="regexGUID" >\{?[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}\}?</sch:let>
 	<sch:let name="regexURI" >([a-zA-Z0-9\\-_\\.!\\~\\*'\\(\\);/\\?:\\@\\&amp;=\\+$,]|(%[a-fA-F0-9]{2}))*</sch:let>
 	<sch:let name="stanag1059List">ABW;ABB;ATG;AFG;DZA;AZE;ALB;ARM;AND;AGO;ARG;AUS;ACI;AUT;AIA;ATA;BHR;BRB;BWA;BMU;BEL;BHS;BGD;BLZ;BIH;BOL;MMR;BEN;BLR;SLB;BRA;BTN;BGR;BVT;BRN;BDI;CAN;KHM;TCD;LKA;COG;COD;CHN;CHL;CYM;CCK;CMR;COM;COL;MNP;CSI;CRI;CAF;CUB;CPV;COK;CYP;CZE;DNK;DJI;DMA;DOM;ECU;EEE;EGY;IRL;GNQ;EST;ERI;ESP;ETH;FFF;GUF;FIN;FJI;FLK;FSM;FRO;PYF;FRA;ATF;FYR;GMB;GAB;DEU;GEO;GHA;GIB;GRD;GRL;GLP;GUM;GRC;GTM;GIN;GUY;HTI;HKG;HMD;HND;HQI;HRV;HUN;ISL;IDN;IND;IOT;UMI;IRN;ISR;ITA;CIV;IRQ;JPN;JAM;JNM;JOR;JQA;KEN;KGZ;PRK;KIR;KOR;CXR;KWT;KAZ;LAO;LBN;LVA;LTU;LBR;SVK;LIE;LSO;LUX;LBY;MDG;MTQ;MAC;MDA;MNE;MNG;MSR;MWI;MLI;MCO;MAR;MUS;MRT;MLT;OMN;MDV;MEX;MYS;MOZ;ANT;NCL;NIU;NFK;NER;VUT;NGA;NLD;NNN;NOR;NPL;NRU;SUR;NTT;NIC;NZL;PRY;PCN;PER;PFI;PAK;POL;PAN;PRT;PNG;PLW;PSE;GNB;QAT;REU;MHL;ROU;PHL;PRI;SRB;RUS;RWA;SAU;SPM;KNA;SYC;ZAF;SEN;SHN;SVN;SJM;SLE;SMR;SGP;SOM;SRR;ASM;WSM;LCA;SDN;SLV;SWE;SGS;SYR;CHE;ARE;TTO;THA;TJK;TCA;TKL;TLS;TON;TGO;STP;TUN;TUR;TUV;TWN;TKM;TZN;UGA;GBR;UKR;USA;UUU;BFA;URY;UZB;VCT;VEN;VIR;VNM;VGB;VAT;NAM;WLF;ESH;SWZ;XXB;XXE;XXG;XXI;XXL;XXM;XXN;XXP;XXR;XXS;XXW;XXY;YEM;SCG;YUG;ZMB;ZWE</sch:let>
-
+	<sch:let name="topicCatEnum">farming;biota;vegetation;boundaries;climatologyMeteorology;economy;elevation;environment;geoscientificInformation;health;imageryBaseMapsEarth;intelligenceMilitary;inlandWaters;location;oceans;planningCadastre;society;structure;transportation;utilitiesCommunication</sch:let>
+	
+	<!-- Code List -->
 	<sch:pattern id="checkCodeList">
-		<sch:title>$loc/strings/M0</sch:title>
+		<sch:title>$loc/strings/M0.1</sch:title>
 		<sch:rule context="//ngmp:*[@codeList]">
 			<sch:let name="codeListVal" value="string(@codeListValue)"/>
 			<sch:let name="codeListDoc" value="document(substring-before(@codeList,'#'))//gmx:CodeListDictionary[@gml:id = substring-after(current()/@codeList,'#')]"/>
 			<sch:assert test="$codeListDoc">Unable to find the specified Code List document (<sch:value-of select="substring-before(@codeList,'#')"/>) or Code List Dictionary (<sch:value-of select="substring-after(current()/@codeList,'#')"/>) node.</sch:assert>
 			<sch:assert test="@codeListValue = $codeListDoc/gmx:codeEntry/gmx:CodeDefinition/gml:identifier">The specified Code List Value (<sch:value-of select="$codeListVal"/>) is not in the specified Code List Dictionary (<sch:value-of select="substring-after(current()/@codeList,'#')"/>).</sch:assert>
+		</sch:rule>
+	</sch:pattern>
+	
+	<!-- Code List Element value -->
+	<sch:pattern id="checkCodeListVal">
+		<sch:title>$loc/strings/M0.2</sch:title>
+		<sch:rule context="//*[@codeList]">
+			<sch:assert test=".!=''"><sch:value-of select="name(.)"/> element value required (saving metadata the value will be copied from related codeListValue attribute)</sch:assert>
 		</sch:rule>
 	</sch:pattern>
 
@@ -52,8 +62,8 @@
 	<sch:pattern id="checkMDLang">
 		<sch:title>$loc/strings/M3</sch:title>
 		<sch:rule context="/gmd:MD_Metadata">
-			<sch:assert test="gmd:language/gmd:LanguageCode and gmd:language/gmd:LanguageCode/@codeListValue 
-		and gmd:language/gmd:LanguageCode/@codeList		
+			<sch:assert test="gmd:language/gmd:LanguageCode/@codeListValue!='' 
+		and gmd:language/gmd:LanguageCode/@codeList!='' 
 		and count(gmd:language/gmd:LanguageCode)=1">$loc/strings/alert.M3</sch:assert>
 		</sch:rule>
 	</sch:pattern>
@@ -62,9 +72,8 @@
 		<sch:title>$loc/strings/M4</sch:title>
 		<sch:rule context="/gmd:MD_Metadata">
 			<sch:assert test="gmd:characterSet/gmd:MD_CharacterSetCode/@codeListValue='utf8'
-		and gmd:characterSet/gmd:MD_CharacterSetCode/@codeList!=''
-		and gmd:characterSet/gmd:MD_CharacterSetCode = 'utf8' 
-		and count(gmd:characterSet/gmd:MD_CharacterSetCode) = 1">$loc/strings/alert.M4</sch:assert>
+		and gmd:characterSet/gmd:MD_CharacterSetCode/@codeList!=''		
+		and count(gmd:characterSet) = 1">$loc/strings/alert.M4</sch:assert>
 		</sch:rule>
 	</sch:pattern>
 	<!-- MDPOC -->
@@ -159,8 +168,21 @@
 		</sch:rule>
 	</sch:pattern>
 	<!-- RSTOPIC -->
+	<sch:pattern id="checkRsTopicCat">
+		<sch:title>$loc/strings/M42</sch:title>
+		<sch:rule context="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification/gmd:topicCategory">
+			<sch:let name="value" value="gmd:MD_TopicCategoryCode"/>
+			<sch:assert test="exists(tokenize($topicCatEnum, ';')[. = $value])">$loc/strings/alert.M42</sch:assert>
+		</sch:rule>
+	</sch:pattern>
 	<!-- RSRPTP -->
-	<!-- Only one instance in the scope of NGMP -->
+	<sch:pattern id="checkRSRPTP">
+		<sch:title>$loc/strings/M41</sch:title>
+		<sch:rule context="/gmd:MD_Metadata/gmd:identificationInfo/gmd:MD_DataIdentification">
+			<sch:assert test="count(gmd:spatialResolution/gmd:MD_Resolution/gmd:equivalentScale/gmd:MD_RepresentativeFraction/gmd:denominator[gco:Integer != '']
+			|gmd:spatialResolution/gmd:MD_Resolution/gmd:distance[gco:Distance!=''])> 0">$loc/strings/warning.M41</sch:assert>
+		</sch:rule>
+	</sch:pattern>
 	<!-- DGITYP -->
 	<sch:pattern id="checkDGITYP">
 		<sch:title>$loc/strings/M19</sch:title>
